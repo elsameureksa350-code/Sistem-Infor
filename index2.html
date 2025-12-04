@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandawa Stories</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7faff;
+        }
+
+        /* ===== Gelombang Background ===== */
+        .wave-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #4d7bff, #0f3bbd);
+            clip-path: ellipse(75% 40% at 50% 0%);
+            z-index: -1;
+            filter: drop-shadow(0px 4px 25px rgba(0, 60, 255, 0.35));
+        }
+
+        /* ===== Header Biru Tua ===== */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 40px;
+            background: #002a78;
+            color: white;
+            font-weight: 600;
+        }
+
+        header input {
+            width: 420px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        header button {
+            background: #0A7777;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ===== Navbar Biru Muda ===== */
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: #4d7bff;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,0,255,0.25);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-right: 30px;
+        }
+
+        .nav-links a, 
+        .nav-right a {
+            margin: 0 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        .section {
+            padding: 40px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* ===== Book Slider + Arrow Button ===== */
+        .slider-wrapper {
+            position: relative;
+        }
+
+        .book-list {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 10px;
+            scroll-behavior: smooth;
+
+            scrollbar-width: thin;
+            scrollbar-color: #4d7bff #e3e8ff;
+        }
+
+        .book-list::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .book-list::-webkit-scrollbar-track {
+            background: #e3e8ff;
+            border-radius: 4px;
+        }
+
+        .book-list::-webkit-scrollbar-thumb {
+            background: #4d7bff;
+            border-radius: 4px;
+        }
+
+        /* Arrow Buttons */
+        .arrow-btn {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            background: white;
+            color: #002a78;
+            font-size: 25px;
+            border: 2px solid #002a78;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .arrow-left {
+            left: -10px;
+        }
+
+        .arrow-right {
+            right: -10px;
+        }
+
+        .arrow-btn:hover {
+            background: #002a78;
+            color: white;
+        }
+
+        /* ===== Book Card ===== */
+        .book {
+            width: 180px;
+            flex-shrink: 0;
+        }
+
+        .book img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .book-title {
+            font-size: 16px;
+            margin-top: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            padding: 70px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+
+        .hero-text {
+            max-width: 500px;
+            font-size: 48px;
+            font-weight: bold;
+            color: #002a78;
+        }
+
+        .hero-sub {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #444;
+        }
+
+        .btn-start {
+            display: inline-block;
+            margin-top: 30px;
+            background: black;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .hero-img img {
+            width: 450px;
+            border-radius: 20px;
+        }
+
+        /* ===== QR ===== */
+        .qr-container {
+            text-align: center;
+            padding: 20px;
+            max-width: 300px;
+            margin: 30px auto;
+        }
+
+        .qr-box {
+            width: 250px;
+            height: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e2e2e2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .qr-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="wave-bg"></div>
+
+<!-- HEADER -->
+<header>
+    <div style="display:flex; align-items:center; gap:30px;">
+        <span>Browse ▾</span>
+        <span>Community ▾</span>
+    </div>
+
+    <input type="text" placeholder="Search">
+
+    <div style="display:flex; align-items:center; gap:25px;">
+        <span>Write ▾</span>
+        <button>Download app</button>
+        <span>Log in</span>
+        <span>Sign Up</span>
+    </div>
+</header>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo"><img src="pandawa terbaru.jpg" alt="hhh" height="100" width="100"></div>
+    <div class="nav-links">
+        <a href="#">Browse</a>
+        <a href="#">Community</a>
+    </div>
+    <div class="nav-right" style="margin-left:auto;">
+        <a href="#">Write</a>
+        <a href="#">Login</a>
+        <a href="#">Sign Up</a>
+    </div>
+</div>
+
+<!-- TRENDING NOW -->
+<div class="section">
+    <div class="title">Trending Now</div>
+
+    <div class="slider-wrapper">
+        <div class="arrow-btn arrow-left" onclick="slideLeft('trend')">❮</div>
+        <div class="arrow-btn arrow-right" onclick="slideRight('trend')">❯</div>
+
+        <div class="book-list" id="trend">
+
+            <div class="book">
+                <a href="#"><img src="foto korupsi.jpg"></a>
+                <div class="book-title">Pendidikan Anti Korupsi</div>
+            </div>
+
+            <div class="book">
+                <a href="#"><img src="petualangan anarkis.jpg"></a>
+                <div class="book-title">Petualangan Anarkis Kecil</div>
+            </div>
+
+            <div class="book">
+                <a href="#"><img src="30harijagojualan.jpg"></a>
+                <div class="book-title">30 Hari Jago Jualan</div>
+            </div>
+
+            <div class="book">
+                <a href="#"><img src="buku easy.jpg"></a>
+                <div class="book-title">Easy Copy Writing</div>
+            </div>
+
+            <div class="book">
+                <a href="#"><img src="bukuilmu.png"></a>
+                <div class="book-title">Ilmu Makrifat Jawa</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="buku rich.png"></a>
+                <div class="book-title">RICH</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="bukubisnis.png"></a>
+                <div class="book-title">buku bisnis</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="bukuhacker.png"></a>
+                <div class="book-title">buku sakti hecker</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="thinkandgrow.png"></a>
+                <div class="book-title">thinkandgrow</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="thinkandgrow.png"></a>
+                <div class="book-title">thinkandgrow</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="thinkandgrow.png"></a>
+                <div class="book-title">thinkandgrow</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="thinkandgrow.png"></a>
+                <div class="book-title">thinkandgrow</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="thinkandgrow.png"></a>
+                <div class="book-title">thinkandgrow</div>
+            </div>
+            <div class="book">
+                <a href="#"><img src="thinkandgrow.png"></a>
+                <div class="book-title">thinkandgrow</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <div>
+        <div class="hero-text">Come for the story. Stay for the connection.</div>
+        <div class="hero-sub">Stories better than streaming dan komentar lebih seru dari grup chat.</div>
+        <a class="btn-start" href="#">Get started</a>
+    </div>
+
+    <div class="hero-img">
+        <img src="https://via.placeholder.com/450">
+    </div>
+</div>
+
+<!-- RECOMMENDATION -->
+<div class="section" style="background:#eaf0ff; margin-top:40px; border-radius:20px;">
+    <div class="title" style="text-align:center; font-size:36px;">Recommendation of the Week</div>
+
+    <div class="slider-wrapper">
+
+        <div class="arrow-btn arrow-left" onclick="slideLeft('reco')">❮</div>
+        <div class="arrow-btn arrow-right" onclick="slideRight('reco')">❯</div>
+
+        <div class="book-list" id="reco">
+
+            <div class="book">
+                <img src="bukuhacker.png">
+                <div class="book-title">Buku Sakti Hacker</div>
+            </div>
+
+            <div class="book">
+                <img src="ilmunegara.jpg">
+                <div class="book-title">Buku Ilmu Negara</div>
+            </div>
+
+            <div class="book">
+                <img src="howtowinfriends.jpeg">
+                <div class="book-title">How To Win Friends</div>
+            </div>
+
+            <div class="book">
+                <img src="foto korupsi.jpg">
+                <div class="book-title">Buku Anti Korupsi</div>
+            </div>
+
+            <div class="book">
+                <img src="bukuilmu.png">
+                <div class="book-title">Ilmu Makrifat</div>
+            </div>
+
+            <div class="book">
+                <img src="bukubisnis.png">
+                <div class="book-title">Buku Bisnis</div>
+            </div>
+
+            <div class="book">
+                <img src="buku easy.jpg">
+                <div class="book-title">Easy CopyWriting</div>
+            </div>
+
+            <div class="book">
+                <img src="buku rich.png">
+                <div class="book-title">Rich Poor Dad</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        padding: 40px;
+        color: #000000;
+    }
+
+    /* Layout wrapper */
+    .qr-wrapper-stylish {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 30px;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    /* Card styling */
+    .qr-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        padding: 25px;
+        width: 260px;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        transition: 0.3s ease;
+    }
+
+    /* Hover animasi stylish */
+    .qr-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Judul */
+    .qr-card h2 {
+        font-size: 20px;
+        margin-bottom: 5px;
+        color: #ffffff;
+    }
+
+    /* Subjudul */
+    .qr-card p {
+        font-size: 14px;
+        margin-bottom: 20px;
+        color: #e2e2e2;
+    }
+
+    /* QR image */
+    .qr-image img {
+        width: 150px;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        transition: 0.3s;
+    }
+
+    /* Hover animasi pada gambar */
+    .qr-card:hover img {
+        transform: scale(1.07);
+    }
+</style>
+</head>
+
+<body>
+
+<div class="qr-wrapper-stylish">
+
+    <!-- QR 1 -->
+    <div class="qr-card">
+        <h2>Karyamu ingin ditampilkan?</h2>
+        <p>Scan QR Code Now</p>
+        <div class="qr-image">
+            <img src="qrtampilkan.png" alt="QR 1">
+        </div>
+    </div>
+
+    <!-- QR 2 -->
+    <div class="qr-card">
+        <h2>Pinjam Buku Secara Offline</h2>
+        <p>Temukan lokasi untuk Scan QR Code</p>
+        <div class="qr-image">
+            <img src="qr_name_tag_card_id.png" alt="QR 2">
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ================== JAVASCRIPT UNTUK SLIDER ================== -->
+<script>
+function slideLeft(id) {
+    document.getElementById(id).scrollBy({
+        left: -300,
+        behavior: "smooth"
+    });
+}
+
+function slideRight(id) {
+    document.getElementById(id).scrollBy({
+        left: 300,
+        behavior: "smooth"
+    });
+}
+</script>
+
+</body>
+</html>
